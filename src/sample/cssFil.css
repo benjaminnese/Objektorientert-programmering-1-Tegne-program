@@ -1,0 +1,6 @@
+.button:focused {
+
+    -fx-stroke-width:5;
+    -fx-stroke: green;
+    -fx-border-color: Navy;
+}
