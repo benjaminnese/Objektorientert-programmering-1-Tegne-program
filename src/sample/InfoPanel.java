@@ -59,10 +59,10 @@ public class InfoPanel extends Main {
         int id = Integer.parseInt(x.getId()) - 1;
 
         String temp = x.toString();
-        String[] tempArr = temp.split(" ");
+        String[] tempArr = temp.split("[\\[\\[\\]\\=\\ ,]");
         System.out.println(temp);
-        for(String k : tempArr)
-            System.out.println(k);
+        for (int i = 1; i < tempArr.length; i++)
+            System.out.println(tempArr[i]);
         TextField txtEndre = new TextField();
         txtEndre.setStyle("-fx-font: 18 open-sans;-fx-font-weight:bold;");
         Button btnEdnre = new Button("Endre");
@@ -89,27 +89,26 @@ public class InfoPanel extends Main {
         Label lblInfo;
 
         for (int i = 1; i < tempArr.length; i++) {
-            if (i == tempArr.length - 1) {
 
-                if (x instanceof Rectangle || x instanceof Ellipse) {
-                    txtEndre.setText(tempArr[i - 2]);
-                    txtEndre2.setText(tempArr[i]);
-                    infoGrid.add(txtEndre, 0, i - 2);
-                    infoGrid.add(txtEndre2, 0, i);
-                    infoGrid.add(btnEdnre, 0, i + 2);
-                } else {
-                    txtEndre.setText(tempArr[i]);
-                    infoGrid.add(txtEndre, 0, i + 1);
-                    infoGrid.add(btnEdnre, 0, i + 2);
-                }
-
-            } else {
+            if(!tempArr[i].isBlank()) {
                 lblInfo = new Label(tempArr[i]);
-                lblInfo.setStyle("-fx-font: 22 open-sans; -fx-font-weight:bold;-fx-text-fill: orange;");
-                if (i % 2 == 0)
-                    lblInfo.setStyle("-fx-font: 20 open-sans; -fx-font-weight:bold;-fx-text-fill: white;");
+                lblInfo.setStyle("-fx-font: 20 open-sans; -fx-font-weight:bold;-fx-text-fill: white;");
+                if (i % 3 == 1)
+                    lblInfo.setStyle("-fx-font: 22 open-sans; -fx-font-weight:bold;-fx-text-fill: orange;");
                 infoGrid.add(lblInfo, 0, i);
             }
+
+        if (x instanceof Rectangle || x instanceof Ellipse && i== tempArr.length-1) {
+            txtEndre.setText(String.valueOf(x.getTranslateX()));
+            txtEndre2.setText(String.valueOf(x.getTranslateY()));
+            infoGrid.add(txtEndre, 0, i - 2);
+            infoGrid.add(txtEndre2, 0, i);
+            infoGrid.add(btnEdnre, 0, i + 2);
+        } else if(i== tempArr.length-1) {
+            txtEndre.setText(tempArr[i]);
+            infoGrid.add(txtEndre, 0, i + 1);
+            infoGrid.add(btnEdnre, 0, i + 2);
+        }
 
         }
 
