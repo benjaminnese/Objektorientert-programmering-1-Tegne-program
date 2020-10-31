@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -9,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-public class VerktøyPanel extends HovedInnhold {
+public class VerktøyPanel extends TegnePanel {
 
     static VBox verktøyPanelZ;
     static VBox verktøyPanel;
@@ -30,80 +31,87 @@ public class VerktøyPanel extends HovedInnhold {
         BorderPane verktøyPanelBeholder = new BorderPane();
 
         verktøyPanelZ = new VBox();
-        verktøyPanelZ.setPrefWidth(75);
+
         verktøyPanel = new VBox();
 
-        verktøyPanel.setPrefWidth(75);
-        verktøyPanel.setStyle("-fx-background-color: Black;");
-        verktøyPanelZ.setStyle("-fx-background-color: Black;");
+
         verktøyPanelBeholder.setStyle("-fx-background-color: #3f6184;");
-        verktøyPanelBeholder.setPadding(new Insets(10,0,10,0));
+        verktøyPanelBeholder.setPadding(new Insets(10, 10, 10, 10));
+        verktøyPanelBeholder.setPrefWidth(150);
         verktøyGrid = new GridPane();
-        verktøyGrid.setVgap(5);
-        verktøyGrid.setHgap(5);
+        verktøyGrid.setVgap(10);
+        verktøyGrid.setHgap(10);
+        verktøyPanel.setAlignment(Pos.CENTER);
         verktøyGridZ = new GridPane();
-        verktøyGridZ.setVgap(5);
-        verktøyGridZ.setHgap(5);
+        verktøyGridZ.setVgap(10);
+        verktøyGridZ.setHgap(10);
+
 
         btnRettLinje = new Button();
         btnRettLinje.setGraphic(hentBilde("line"));
-        btnRettLinje.setOnAction(e -> hovedInnhold.setOnMousePressed(MuseTrykk.mouseHandlerSirkel));
+        btnRettLinje.setOnAction(e -> tegnePanel.setOnMousePressed(EventHåntering.mouseHandlerFigur));
         btnRettLinje.setTooltip(new Tooltip("Lag rett linje"));
 
         btnSirkel = new Button();
         btnSirkel.setGraphic(hentBilde("Sirkel"));
-        btnSirkel.setOnAction(e -> hovedInnhold.setOnMousePressed(MuseTrykk.mouseHandlerSirkel));
+        btnSirkel.setOnAction(e -> tegnePanel.setOnMousePressed(EventHåntering.mouseHandlerFigur));
         btnSirkel.setTooltip(new Tooltip("Lag Sirkel"));
 
         btnFirkant = new Button();
         btnFirkant.setGraphic(hentBilde("square"));
-        btnFirkant.setOnAction(e -> hovedInnhold.setOnMousePressed(MuseTrykk.mouseHandlerSirkel));
+        btnFirkant.setOnAction(e -> tegnePanel.setOnMousePressed(EventHåntering.mouseHandlerFigur));
         btnFirkant.setTooltip(new Tooltip("Lag Firkant"));
 
         btnEllipse = new Button();
         btnEllipse.setGraphic(hentBilde("ellipse"));
-        btnEllipse.setOnAction(e -> hovedInnhold.setOnMousePressed(MuseTrykk.mouseHandlerSirkel));
+        btnEllipse.setOnAction(e -> tegnePanel.setOnMousePressed(EventHåntering.mouseHandlerFigur));
         btnEllipse.setTooltip(new Tooltip("Lag ellipse"));
 
         btnText = new Button();
         btnText.setGraphic(hentBilde("font"));
-        btnText.setOnAction(e -> hovedInnhold.setOnMousePressed(MuseTrykk.mouseHandlerSirkel));
+        btnText.setOnAction(e -> tegnePanel.setOnMousePressed(EventHåntering.mouseHandlerFigur));
         btnText.setTooltip(new Tooltip("Lag text boks"));
 
         btnVelgFigur = new Button();
         btnVelgFigur.setGraphic(hentBilde("valgFigur"));
-        btnVelgFigur.setOnAction(e -> MuseTrykk.selectedShape.setOnMousePressed(MuseTrykk.mouseHandlerVelgFigur));
+        btnVelgFigur.setOnAction(e -> EventHåntering.figur.setOnMousePressed(EventHåntering.mouseHandlerVelgFigur));
         btnVelgFigur.setTooltip(new Tooltip("Velg figur"));
 
 
         btnNed = new Button();
         btnNed.setGraphic(hentBilde("Minus"));
-        btnNed.setOnAction(e->{
-            int index = Integer.parseInt(MuseTrykk.selectedShape.getId())-1;
-            hovedInnhold.getChildren().get(index).setViewOrder(hovedInnhold.getChildren().get(index).getViewOrder()+0.1);
+        btnNed.setOnAction(e -> {
+            int index = Integer.parseInt(EventHåntering.figur.getObjekt().getId()) - 1;
+            tegnePanel.getChildren().get(index).setViewOrder(tegnePanel.getChildren().get(index).getViewOrder() + 0.1);
+            VerktøyPanel.btnVelgFigur.requestFocus();
         });
+
         btnOpp = new Button();
         btnOpp.setGraphic(hentBilde("leggTil"));
-        btnOpp.setOnAction(e->{
-            int index = Integer.parseInt(MuseTrykk.selectedShape.getId())-1;
-            hovedInnhold.getChildren().get(index).setViewOrder(hovedInnhold.getChildren().get(index).getViewOrder()-0.1);
+        btnOpp.setOnAction(e -> {
+            int index = Integer.parseInt(EventHåntering.figur.getObjekt().getId()) - 1;
+            tegnePanel.getChildren().get(index).setViewOrder(tegnePanel.getChildren().get(index).getViewOrder() - 0.1);
+            VerktøyPanel.btnVelgFigur.requestFocus();
         });
 
         btnHeltFrem = new Button();
         btnHeltFrem.setGraphic(hentBilde("up-arrow"));
-        btnHeltFrem.setOnAction(e->{
-            int index = Integer.parseInt(MuseTrykk.selectedShape.getId())-1;
-            for(int i = 0; i < hovedInnhold.getChildren().size();i++)
-                if(hovedInnhold.getChildren().get(i).getViewOrder() < hovedInnhold.getChildren().get(index).getViewOrder())
-                    hovedInnhold.getChildren().get(index).setViewOrder(hovedInnhold.getChildren().get(i).getViewOrder()-0.1);
+        btnHeltFrem.setOnAction(e -> {
+            int index = Integer.parseInt(EventHåntering.figur.getObjekt().getId()) - 1;
+            for (int i = 0; i < tegnePanel.getChildren().size(); i++)
+                if (tegnePanel.getChildren().get(i).getViewOrder() <= tegnePanel.getChildren().get(index).getViewOrder())
+                    tegnePanel.getChildren().get(index).setViewOrder(tegnePanel.getChildren().get(i).getViewOrder() - 0.1);
+            VerktøyPanel.btnVelgFigur.requestFocus();
         });
+
         btnHeltBak = new Button();
         btnHeltBak.setGraphic(hentBilde("down-arrow"));
-        btnHeltBak.setOnAction(e->{
-            int index = Integer.parseInt(MuseTrykk.selectedShape.getId())-1;
-            for(int i = 0; i < hovedInnhold.getChildren().size();i++)
-                if(hovedInnhold.getChildren().get(i).getViewOrder() > hovedInnhold.getChildren().get(index).getViewOrder())
-                    hovedInnhold.getChildren().get(index).setViewOrder(hovedInnhold.getChildren().get(i).getViewOrder()+0.1);
+        btnHeltBak.setOnAction(e -> {
+            int index = Integer.parseInt(EventHåntering.figur.getObjekt().getId()) - 1;
+            for (int i = 0; i < tegnePanel.getChildren().size(); i++)
+                if (tegnePanel.getChildren().get(i).getViewOrder() >= tegnePanel.getChildren().get(index).getViewOrder())
+                    tegnePanel.getChildren().get(index).setViewOrder(tegnePanel.getChildren().get(i).getViewOrder() + 0.1);
+            VerktøyPanel.btnVelgFigur.requestFocus();
         });
 
 
@@ -113,10 +121,10 @@ public class VerktøyPanel extends HovedInnhold {
         verktøyGrid.add(btnText, 1, 1);
         verktøyGrid.add(btnEllipse, 0, 2);
         verktøyGrid.add(btnVelgFigur, 1, 2);
-        verktøyGridZ.add(btnOpp,0,0);
-        verktøyGridZ.add(btnNed,1,0);
-        verktøyGridZ.add(btnHeltFrem,0,1);
-        verktøyGridZ.add(btnHeltBak,1,1);
+        verktøyGridZ.add(btnOpp, 0, 0);
+        verktøyGridZ.add(btnNed, 1, 0);
+        verktøyGridZ.add(btnHeltFrem, 0, 1);
+        verktøyGridZ.add(btnHeltBak, 1, 1);
 
         verktøyPanel.getChildren().add(verktøyGrid);
         verktøyPanelZ.getChildren().add(verktøyGridZ);

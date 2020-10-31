@@ -1,32 +1,46 @@
 package sample;
 
 
-import javafx.scene.shape.Circle;
+
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class TextBox extends Text {
+public class TextBox extends Figur {
     Text txtBox;
 
-    TextBox() {
-        new Figur.FigurKjør();
-        txtBox = new Text(20,20,"TextBox: " + Figur.antall);
-        txtBox.setFont(Font.font(30));
-        Figur.figurListe.add(txtBox);
+    TextBox(double x, double y) {
+        //new Figur.FigurKjør();
+        super();
+        txtBox = new Text(x,y, "TextBox");
+        txtBox.setFont(Font.font(40));
+        Figur.figurListe.add(this);
         txtBox.setId("" + Figur.antall);
 
     }
 
 
-    public void setStyleFigur(String k) {
-        txtBox.setStyle(k);
+    @Override
+    public void flyttFigur(double x, double y) {
+        txtBox.setX(x);
+        txtBox.setY(y);
+    }
+
+    @Override
+    public String getAreal() {
+        return null;
+    }
+
+    @Override
+    public String getOmkrets() {
+        return null;
     }
 
     public String toString() {
-        return super.toString() +
-                txtBox.getId()
-                + "@Type:@"
-                + this.getTypeSelector()
+        return super.toString()
+                + "Posisjon:@"
+                + txtBox.getId()
+                + " av "
+                + figurListe.size()
                 + "@Farge:@"
                 + txtBox.getFill()
                 + "@X:@"
@@ -38,12 +52,18 @@ public class TextBox extends Text {
     }
 
 
-    public void setStrokeWidth(int x) {
-
+    @Override
+    public void setText(String text) {
+        txtBox.setText(text);
+    }
+    @Override
+    public String hentFigurType() {
+        return txtBox.getTypeSelector();
     }
 
 
-    public TextBox getObjekt() {
-        return this;
+    @Override
+    public Text getObjekt() {
+        return txtBox;
     }
 }

@@ -1,64 +1,79 @@
 package sample;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 
-public class EllipseFigur extends Ellipse {
+public class EllipseFigur extends Figur {
     Ellipse ellipse;
 
-    EllipseFigur() {
-        new Figur.FigurKjør();
-    }
 
-    EllipseFigur(double x1, double y1, double x2, double y2) {
-        this();
+    EllipseFigur(double x1, double y1, double x2, double y2, Color farge) {
+        super();
         ellipse = new Ellipse(x1, y1, x2, y2);
-        ellipse.setFill(Figur.farge);
+        ellipse.setFill(farge);
         ellipse.setStroke(Color.BLACK);
-        Figur.figurListe.add(ellipse);
+        ellipse.setStrokeWidth(10);
+        Figur.figurListe.add(this);
         ellipse.setId("" + Figur.antall);
     }
 
 
-    public void setStartX(double x) {
-        ellipse.setCenterX(x);
+    @Override
+    public String hentFigurType() {
+        return ellipse.getTypeSelector();
     }
 
-    public void setStartY(double y) {
+    @Override
+    public void flyttFigur(double x, double y) {
+        ellipse.setCenterX(x);
         ellipse.setCenterY(y);
     }
 
 
-
-
-    public void setStrokeWidth(int x) {
-        if (x == 1)
-            ellipse.setStrokeWidth(10);
-        else if (x == 0)
-            ellipse.setStrokeWidth(5);
-        else
-            ellipse.setStrokeWidth(1);
+    @Override
+    public String getAreal() {
+        return "Husk";
     }
+
+    @Override
+    public String getOmkrets() {
+        return "Husk";
+    }
+
+    @Override
+    public void setRadius(double x, double y) {
+        ellipse.setRadiusX(x);
+        ellipse.setRadiusY(y);
+    }
+
+
     @Override
     public String toString() {
-        return
-                ellipse.getId()
-                + "@Type:@"
-                + this.getTypeSelector()
+        return  super.toString()
+                + "Posisjon:@"
+                + ellipse.getId()
+                + " av "
+                + figurListe.size()
                 + "@Farge:@"
                 + ellipse.getFill()
+                + "@X:@"
+                + ellipse.getCenterX()
+                + "@Y:@"
+                + ellipse.getCenterY()
+                + "@Areal:@"
+                + getAreal()
+                + "@Omkrets:@"
+                + getOmkrets()
                 + "@X radius:@"
                 + ellipse.getRadiusX()
                 + "@Y radius:@"
                 + ellipse.getRadiusY();
     }
 
-
-    public EllipseFigur getObjekt() {
-        return this;
+    @Override
+    public Ellipse getObjekt() {
+        return ellipse;
     }
-
 
 
 }

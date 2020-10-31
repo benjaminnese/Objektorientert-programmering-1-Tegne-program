@@ -1,29 +1,23 @@
 package sample;
 
-import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
-public class RettLinje extends Line {
+
+public class RettLinje extends Figur {
+
     Line linje;
     double linjeTykkelse = 10;
 
-    RettLinje() {
-        new Figur.FigurKjør();
-    }
-
-    RettLinje(double x1, double y1, double x2, double y2) {
-        this();
-        linje = new Line();
+    RettLinje(double x, double y) {
+        super();
+        linje = new Line(x,y,x,y);
         linje.setStrokeWidth(linjeTykkelse);
-        linje.setStartX(x1);
-        linje.setStartY(y1);
-        linje.setEndX(x2);
-        linje.setEndY(y2);
-        Figur.figurListe.add(linje);
+        linje.setStroke(Color.BLACK);
+        Figur.figurListe.add(this);
         linje.setId("" + Figur.antall);
 
     }
-
 
     public double getBredde() {
         return (linje.getStartX() > linje.getEndX()) ?
@@ -37,13 +31,40 @@ public class RettLinje extends Line {
                 linje.getEndY() - linje.getStartY();
     }
 
+    @Override
+    public void setEndX(double x){
+        linje.setEndX(x);
+    }
+    @Override
+    public void setEndY(double y){
+        linje.setEndY(y);
+    }
+    @Override
+    public void flyttFigur(double x, double y) {
+        linje.setStartX(this.getBredde());
+        linje.setStartY(this.getHøyde());
+        linje.setEndX(this.getBredde()-x);
+        linje.setEndY(this.getHøyde()-y);
+    }
+
+    @Override
+    public String getAreal() {
+        return null;
+    }
+
+    @Override
+    public String getOmkrets() {
+        return null;
+    }
+
     public String toString() {
-        return super.toString() +
-                linje.getId()
-                + "@Type:@"
-                + this.getTypeSelector()
+        return super.toString()
+                + "Posisjon:@"
+                + linje.getId()
+                + " av "
+                + figurListe.size()
                 + "@Farge:@"
-                + linje.getFill()
+                + linje.getStroke()
                 + "@X Start:@"
                 + linje.getStartX()
                 + "@X Slutt:@"
@@ -56,14 +77,18 @@ public class RettLinje extends Line {
                 + linje.getStrokeWidth();
     }
 
-
-    public void setStrokeWidth(int x) {
-
+    @Override
+    public void setStrokeWidthLinje(double x){
+        linje.setStrokeWidth(x);
     }
 
+    @Override
+    public String hentFigurType() {
+        return linje.getTypeSelector();
+    }
 
-
-    public RettLinje getObjekt() {
-        return this;
+    @Override
+    public Line getObjekt() {
+        return linje;
     }
 }
