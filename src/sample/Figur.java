@@ -1,62 +1,46 @@
 package sample;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 
-      abstract class Figur {
+abstract class Figur extends Shape {
 
+    protected static Color farge = Color.WHITE;
+    static LinkedList<Figur> figurListe = new LinkedList<>(); //Alle figurer blir lagt til her i sin
+                                                              //konstrøtkor
 
-        static ObservableList<Shape> figurListe = FXCollections.observableArrayList();
-
-
-        static Color farge = Color.WHITE;
-        static int antall = 0;
-
+    static int antall = 0; //variabel for å holde styr på antall figurer
 
 
     Figur() {
-
-        farge = Color.color(Math.random(), Math.random(), Math.random());
         antall++;
-        StatusPanel.txtStatusInfo.setText("Antall: " + antall);
+    }
 
+    public void setX(double x) { }
+    public void setY(double y) { }
+    public void setEndX(double x) { }
+    public void setEndY(double y) { }
+    public void setRadius(double x) { }
+    public void setRadius(double x, double y) { }
+    public void setBreddeHøyde(double x, double y){}
+    public void setWidth(double x){}
+    public void setHeight(double y){}
+    public void setStrokeWidthLinje(double x){}
+    public void setText(String text) { }
+
+    public String toString() {
+        return EventHåntering.figur.hentFigurType().toUpperCase()+"@";
     }
 
 
-
-
-
-         public static class FigurKjør extends Figur{
-         FigurKjør(){
-             super();
-         }
-
-
-
-
-             public <T, K> T getObjekt() {
-             return null;
-         }
-     }
-
-
-
-
+    //Abstracte metoder, disse blir abstract siden fleste subklassene trenger metodene.
+    public abstract <T extends Shape> T getObjekt();
+    public abstract String hentFigurType();
+    public abstract void flyttFigur(double x, double y);
+    public abstract String getAreal();
+    public abstract String getOmkrets();
 
 
 }
-
-
-
-

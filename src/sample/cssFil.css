@@ -1,6 +1,10 @@
-.button:focused {
+.button:hover {
+    -fx-background-color: darkorange;
+}
+.button:focused{
+    -fx-background-color: slategrey;
+}
 
-    -fx-stroke-width:5;
-    -fx-stroke: green;
-    -fx-border-color: Navy;
+.menu-bar{
+    -fx-padding: 0 0 0 5;
 }

@@ -1,32 +1,58 @@
 package sample;
 
 
-import javafx.scene.shape.Circle;
+
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class TextBox extends Text {
+public class TextBox extends Figur {
     Text txtBox;
 
-    TextBox() {
-        new Figur.FigurKjør();
-        txtBox = new Text(20,20,"TextBox: " + Figur.antall);
-        txtBox.setFont(Font.font(30));
-        Figur.figurListe.add(txtBox);
+    TextBox(double x, double y) {
+        super();
+        txtBox = new Text(x,y, "TextBox");
+        txtBox.setFont(Font.font(40));
+        Figur.figurListe.add(this);
         txtBox.setId("" + Figur.antall);
-
     }
 
+    @Override
+    public void flyttFigur(double x, double y) {
+        txtBox.setX(x);
+        txtBox.setY(y);
+    }
 
-    public void setStyleFigur(String k) {
-        txtBox.setStyle(k);
+    @Override
+    public String getAreal() {
+        return null;
+    }
+
+    @Override
+    public String getOmkrets() {
+        return null;
+    }
+
+    @Override
+    public void setText(String text) {
+        txtBox.setText(text);
+    }
+
+    @Override
+    public String hentFigurType() {
+        return txtBox.getTypeSelector();
+    }
+
+    @Override
+    public Text getObjekt() {
+        return txtBox;
     }
 
     public String toString() {
-        return super.toString() +
-                txtBox.getId()
-                + "@Type:@"
-                + this.getTypeSelector()
+        return super.toString()
+                + "Posisjon:@"
+                + txtBox.getId()
+                + " av "
+                + figurListe.size()
                 + "@Farge:@"
                 + txtBox.getFill()
                 + "@X:@"
@@ -35,15 +61,5 @@ public class TextBox extends Text {
                 + txtBox.getY()
                 + "@Innhold:@"
                 + txtBox.getText();
-    }
-
-
-    public void setStrokeWidth(int x) {
-
-    }
-
-
-    public TextBox getObjekt() {
-        return this;
     }
 }

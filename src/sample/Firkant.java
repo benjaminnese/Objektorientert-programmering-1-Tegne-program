@@ -2,84 +2,87 @@ package sample;
 
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 
-public class Firkant extends Rectangle  {
+public class Firkant extends Figur {
     Rectangle firkant;
 
-    Firkant() {
-        new Figur.FigurKjør();
 
-    }
-
-    Firkant(double x1, double y1, double x2, double y2) {
-        this();
+    Firkant(double x1, double y1, double x2, double y2, Color farge) {
+        super();
         firkant = new Rectangle(x1, y1, x2, y2);
-        firkant.setFill(Figur.farge);
+        firkant.setFill(farge);
         firkant.setStroke(Color.BLACK);
-        Figur.figurListe.add(firkant);
+        firkant.setStrokeWidth(10);
+        Figur.figurListe.add(this);
         firkant.setId("" + Figur.antall);
     }
 
-    public void setStartX(double x) {
-        firkant.setX(x);
+    @Override
+    public void setBreddeHøyde(double x, double y){
+        double bredde = (x > firkant.getX()) ? x - firkant.getX() : firkant.getX() - x;
+        double høyde = (y > firkant.getY()) ? y - firkant.getY() : firkant.getY() - y;
+        firkant.setWidth(bredde);
+        firkant.setHeight(høyde);
     }
 
-    public void setStartY(double y) {
-        firkant.setY(y);
+    @Override
+    public void flyttFigur(double x, double y) {
+        firkant.setX(x - firkant.getWidth() / 2);
+        firkant.setY(y - firkant.getHeight() / 2);
     }
 
-    public double getWidthRiktig(double b) {
-        double bredde = (b > firkant.getX()) ? b - firkant.getX() : firkant.getX() - b;
-        return bredde;
-    }
-    public double getHeightRiktig(double h) {
-        double høyde = (h > firkant.getY()) ? h - firkant.getY() : firkant.getY() - h;
-       return høyde;
+    @Override
+    public void setHeight(double x){
+        firkant.setHeight(x);
     }
 
-    public double getBredde() {
-        return firkant.getWidth();
+    @Override
+    public void setWidth(double y){
+        firkant.setWidth(y);
     }
 
-    public double getHøyde() {
-        return firkant.getHeight();
+    @Override
+    public String getAreal() {
+        return "" + (int)(((firkant.getHeight()*firkant.getWidth())/100)+0.5);
     }
 
+    @Override
+    public String getOmkrets() {
+        return "" + (int)((((firkant.getWidth()*2)+(firkant.getHeight()*2))/100)+0.5);
+    }
 
+    @Override
+    public String hentFigurType() {
+        return firkant.getTypeSelector();
+    }
 
+    @Override
+    public Rectangle getObjekt() {
+        return firkant;
+    }
 
+    @Override
     public String toString() {
-        return super.toString() +
-                firkant.getId()
-                + "@Type:@"
-                + this.getTypeSelector()
+        return super.toString()
+                + "Posisjon:@"
+                + firkant.getId()
+                + " av "
+                + figurListe.size()
                 + "@Farge:@"
                 + firkant.getFill()
                 + "@X:@"
                 + firkant.getX()
                 + "@Y:@"
                 + firkant.getY()
+                + "@Areal/100:@"
+                + getAreal()
+                + "@Omkrets/100@"
+                + getOmkrets()
                 + "@Hoyde:@"
                 + firkant.getHeight()
                 + "@Bredde:@"
                 + firkant.getWidth();
-    }
-
-
-    public void setStrokeWidth(int x) {
-        if (x == 1)
-            firkant.setStrokeWidth(10);
-        else if (x == 0)
-            firkant.setStrokeWidth(5);
-        else
-            firkant.setStrokeWidth(1);
-    }
-
-
-    public Firkant getObjekt() {
-        return this;
     }
 }
