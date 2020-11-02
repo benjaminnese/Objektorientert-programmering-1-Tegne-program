@@ -1,3 +1,6 @@
 # Oblig_javaFX
 
-Prosjekt i å lage et Canvas i JavaFX hvor bruker kan lage figurer, flytte på dem og endre farge/størrelse.
+//Kommenterer det jeg føler det kan være usikkerhet på om koden er forstått av meg
+//Kunne nok gjort mer polyformi, private/protected/public, try/catch og generell lovelighet av inndata.
+
+
