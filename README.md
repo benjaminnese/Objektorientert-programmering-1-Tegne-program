@@ -1,6 +1,3 @@
-# Oblig_javaFX
-
-//Kommenterer det jeg føler det kan være usikkerhet på om koden er forstått av meg
-//Kunne nok gjort mer polyformi, private/protected/public, try/catch og generell lovelighet av inndata.
+![ObligBilde2](https://user-images.githubusercontent.com/56982528/141187880-5e789f57-8d7c-447e-b544-5527f963337a.png)
 
 
